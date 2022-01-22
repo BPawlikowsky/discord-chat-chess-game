@@ -1,0 +1,7 @@
+node_modules
+config.json
+.eslintrc.json
+.vscode/settings.json
+src/game.json
+src/board.png
+.gitignore

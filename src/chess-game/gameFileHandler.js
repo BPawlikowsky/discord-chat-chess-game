@@ -1,11 +1,11 @@
 const { access, readFile, writeFile } = require('fs/promises');
 const { constants } = require('fs');
-const gameObjectPrototype = require('./gameObjectPrototype');
+const gameObjectPrototype = require('./helpers/gameObjectPrototype');
 
 const PATH = 'src/game.json';
 
 const createWriteFile = async (data) => {
-	await writeFile(PATH, data)
+	return writeFile(PATH, data)
 		.then(() => {
 			console.log('created/written file.');
 		})

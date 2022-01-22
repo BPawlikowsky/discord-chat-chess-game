@@ -16,7 +16,6 @@ exports.startGame = async (user) => {
 	if (players.length < 2) {
 		await registerPlayer(user);
 		if (players.length === 1) {
-			increaseRound(0);
 			return `${playerRegMessage(user, players.length + 1)}\n${startGameMessage()}`;
 		}
 		return playerRegMessage(user, players.length + 1);

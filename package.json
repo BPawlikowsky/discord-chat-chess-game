@@ -12,8 +12,10 @@
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "chess.js": "^0.12.0",
+    "cm-chessboard": "^3.16.4",
     "discord-api-types": "^0.26.1",
     "discord.js": "^13.6.0",
+    "fen-to-image": "^0.0.10",
     "jso": "^4.1.1",
     "node-style": "^2.0.0"
   },

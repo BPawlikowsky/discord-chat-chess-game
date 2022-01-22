@@ -11,6 +11,6 @@ module.exports = {
 			.setDescription('chess game,"start" to start\n"move [from] [to]" to move piece'),
 		),
 	async execute(interaction) {
-		chessGame(interaction);
+		await chessGame(interaction);
 	},
 };

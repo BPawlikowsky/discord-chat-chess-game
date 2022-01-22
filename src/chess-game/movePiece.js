@@ -1,6 +1,6 @@
 const { Chess } = require('chess.js');
 const { readGameFile, saveGameFile } = require('./gameFileHandler');
-const { checkIfMoveLegal, increaseRound, constants, getCurrentBoard } = require('./gameHandler');
+const { checkIfMoveLegal, increaseRound, constants } = require('./gameHandler');
 const { typoFromMoveMessage, typoToMoveMessage, legalMoveMessage, illegalMoveMessage, wrongPlayerMessage } = require('./replyMessages');
 
 const { B, W } = constants;
@@ -40,8 +40,7 @@ exports.movePiece = async (user, moveFrom, moveTo) => {
 	gameObj.moves.push(move);
 	gameObj.currentGameState = chess.fen();
 	await saveGameFile(gameObj);
-	increaseRound(chess.turn() === 'b' ? B : W);
-	const boardStr = await getCurrentBoard();
+	gameObj.round = increaseRound(gameObj, chess.turn() === 'b' ? B : W);
 	const moveStr = legalMoveMessage(user, moveFrom, moveTo);
-	return `${moveStr}\n${boardStr}`;
+	return `${moveStr}`;
 };

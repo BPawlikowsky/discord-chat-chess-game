@@ -1,6 +1,6 @@
-const { inlineCode } = require('@discordjs/builders');
-const { Chess } = require('chess.js');
+const { MessageAttachment, MessageEmbed } = require('discord.js');
 const { readGameFile, saveGameFile } = require('./gameFileHandler');
+const FTI = require('fen-to-image');
 
 module.exports = {
 	getRegisteredPlayers: async () => {
@@ -16,13 +16,12 @@ module.exports = {
 		await saveGameFile(gameObj);
 		console.log(`Player ${playersArr.length} registered: ${user}`);
 	},
-	increaseRound: async (userIndex) => {
-		const gameObj = await readGameFile();
-		gameObj.round.userIndex = userIndex;
-		gameObj.round.roundNumber = gameObj.round.roundNumber + 1;
-
-		await saveGameFile(gameObj);
+	increaseRound: (gameObj, userIndex) => {
+		const gameObject = { ...gameObj };
+		gameObject.round.userIndex = userIndex;
+		gameObject.round.roundNumber = gameObj.round.roundNumber + 1;
 		console.log(`Round increased to ${gameObj.round.roundNumber}`);
+		return gameObject.round;
 	},
 	getRound: async () => {
 		const gameObj = await readGameFile();
@@ -31,11 +30,21 @@ module.exports = {
 	checkIfMoveLegal: (move) => {
 		return /[a-h][1-8]/.test(move);
 	},
-	getCurrentBoard: async () => {
-		const gameObj = await readGameFile();
-		const chess = Chess(gameObj.currentGameState);
-		const player = gameObj.players[gameObj.round.userIndex];
-		return `Current player: ${player} color: ${chess.turn()}\n${inlineCode(chess.ascii())}`;
+	getCurrentBoard: async (gameObj, message, title, lastMove, path) => {
+		await FTI({
+			fen: gameObj.currentGameState,
+			color: 'white',
+			whiteCheck: false,
+			blackCheck: false,
+			lastMove: lastMove,
+			dirsave: path,
+		})
+			.catch(err => console.log(err));
+		const file = new MessageAttachment(path.toString());
+		const embed = new MessageEmbed()
+			.setTitle(title)
+			.setImage('attachment://discordjs.png');
+		return { content: message, embeds: [embed], files: [file] };
 	},
 	constants: {
 		W: '0',
