@@ -1,0 +1,23 @@
+{
+  "name": "chess",
+  "version": "1.0.0",
+  "description": "Discord chess game.",
+  "main": "src/App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BP",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.11.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "chess.js": "^0.12.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
+    "jso": "^4.1.1",
+    "node-style": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0"
+  }
+}
