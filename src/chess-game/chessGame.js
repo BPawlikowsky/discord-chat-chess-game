@@ -24,7 +24,7 @@ exports.chessGame = async (interaction) => {
 	} break;
 	case 'move': {
 		const moveMessage = await movePiece(user.username, moveFrom, moveTo);
-		const gameObj = await readGameFile();
+		const gameObj = readGameFile();
 		const chess = new Chess(gameObj.currentGameState);
 		const player = gameObj.players[gameObj.round.userIndex];
 		const lastMove = `${moveFrom}${moveTo}`;
@@ -37,13 +37,13 @@ exports.chessGame = async (interaction) => {
 		await interaction.reply('Game file has been reset.');
 	} break;
 	case 'board': {
-		const gameObj = await readGameFile();
+		const gameObj = readGameFile();
 		const chess = new Chess(gameObj.currentGameState);
 		const player = gameObj.players[gameObj.round.userIndex];
 		const lastMove = `${moveFrom}${moveTo}`;
 		const title = `Current player: ${player} color: ${chess.turn()}`;
-		if (!lastMove) {
-			const message = await getCurrentBoard(gameObj, 'Current board view', title, 'a2a3', PATH);
+		if (lastMove !== '') {
+			const message = await getCurrentBoard(gameObj, 'Current board view', title, 'a2a2', PATH);
 			await interaction.reply(message);
 		}
 		else {
