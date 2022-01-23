@@ -12,23 +12,18 @@ exports.movePiece = async (user, moveFrom, moveTo) => {
 	else if (!checkIfMoveLegal(moveTo)) {
 		return typoToMoveMessage();
 	}
-	const gameObj = await readGameFile();
+	const gameObj = readGameFile();
 
-	let chess;
-	if (gameObj.round.roundNumber === 1) {
-		chess = new Chess();
-	}
-	else {
-		chess = new Chess(gameObj.currentGameState);
-
-	}
+	const chess = new Chess(gameObj.currentGameState);
+	
 	const currentUser = gameObj.round.userIndex;
 	if (gameObj.players[currentUser] !== user) {
 		return wrongPlayerMessage();
 	}
 	const chessMove = chess.move({ from: moveFrom, to: moveTo });
 	if (chessMove === null) {
-		return illegalMoveMessage();
+		const moves = chess.moves({ verbose: true, square: moveFrom });
+		return illegalMoveMessage(moves);
 	}
 	const move = {
 		user: user,
@@ -39,8 +34,8 @@ exports.movePiece = async (user, moveFrom, moveTo) => {
 	};
 	gameObj.moves.push(move);
 	gameObj.currentGameState = chess.fen();
-	await saveGameFile(gameObj);
 	gameObj.round = increaseRound(gameObj, chess.turn() === 'b' ? B : W);
+	await saveGameFile(gameObj);
 	const moveStr = legalMoveMessage(user, moveFrom, moveTo);
 	return `${moveStr}`;
 };
