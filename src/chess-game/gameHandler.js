@@ -3,13 +3,13 @@ const { readGameFile, saveGameFile } = require('./gameFileHandler');
 const FTI = require('fen-to-image');
 
 module.exports = {
-	getRegisteredPlayers: async () => {
-		const gameObj = await readGameFile();
+	getRegisteredPlayers: () => {
+		const gameObj = readGameFile();
 		if (gameObj) return gameObj.players;
 		return [];
 	},
 	registerPlayer: async (user) => {
-		const gameObj = await readGameFile();
+		const gameObj = readGameFile();
 		const playersArr = [...gameObj.players];
 		playersArr.push(user);
 		gameObj.players = playersArr;
@@ -23,8 +23,8 @@ module.exports = {
 		console.log(`Round increased to ${gameObj.round.roundNumber}`);
 		return gameObject.round;
 	},
-	getRound: async () => {
-		const gameObj = await readGameFile();
+	getRound: () => {
+		const gameObj = readGameFile();
 		return gameObj.round;
 	},
 	checkIfMoveLegal: (move) => {
