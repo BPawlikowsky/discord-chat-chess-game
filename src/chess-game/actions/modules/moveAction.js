@@ -1,7 +1,7 @@
 const { Chess } = require('chess.js');
-const { readGameFile, saveGameFile } = require('../gameFileHandler');
-const { checkIfMoveLegal, getCurrentBoard } = require('../gameHandler');
-const { wrongPlayerMessage, typoFromMoveMessage, typoToMoveMessage } = require('../helpers/replyMessages');
+const { readGameFile, saveGameFile } = require('../../gameFileHandler');
+const { checkIfMoveLegal } = require('../../helpers');
+const { wrongPlayerMessage, typoFromMoveMessage, typoToMoveMessage } = require('../../helpers/replyMessages');
 const { boardAction } = require('./boardAction');
 const { move } = require('./move');
 

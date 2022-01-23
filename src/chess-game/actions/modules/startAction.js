@@ -1,13 +1,13 @@
-const { isGameFile, createGameFile } = require('../gameFileHandler');
+const { isGameFile, createGameFile } = require('../../gameFileHandler');
 const {
 	getRegisteredPlayers,
 	registerPlayer,
-} = require('../gameHandler');
+} = require('../../helpers');
 const {
 	playerRegMessage,
 	allPlayersRegMessage,
 	startGameMessage,
-} = require('../helpers/replyMessages');
+} = require('../../helpers/replyMessages');
 
 exports.startAction = async (user) => {
 	const isGameFileCreated = await isGameFile();

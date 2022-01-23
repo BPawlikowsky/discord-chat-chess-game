@@ -1,8 +1,8 @@
-const { constants } = require('../gameHandler');
+const { constants } = require('../../helpers');
 const {
 	legalMoveMessage,
 	illegalMoveMessage,
-} = require('../helpers/replyMessages');
+} = require('../../helpers/replyMessages');
 
 const { B, W } = constants;
 

@@ -1,8 +1,6 @@
 const { createGameFile } = require('./gameFileHandler');
-const { getOptions } = require('./helpers/getOptions');
-const { startAction } = require('./modules/startAction');
-const { moveAction } = require('./modules/moveAction');
-const { boardAction } = require('./modules/boardAction');
+const { getOptions } = require('./helpers/modules/getOptions');
+const { startAction, moveAction, boardAction } = require('./actions/index');
 
 exports.chessGame = async (interaction) => {
 	const { options, user } = interaction;
