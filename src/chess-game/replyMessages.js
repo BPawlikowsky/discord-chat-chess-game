@@ -5,6 +5,16 @@ module.exports = {
 	typoFromMoveMessage: () => 'Typo in "from" coordinate.',
 	typoToMoveMessage: () => 'Typo in "to" coordinate.',
 	legalMoveMessage: (user, moveFrom, moveTo) => `${user} moves from ${moveFrom} to ${moveTo}`,
-	illegalMoveMessage: () => 'Illegal move, try again',
+	illegalMoveMessage: (moves) => {
+		const movesStr = moves.map((el, index) => {
+			const movesPerRow = 2;
+			if (index === 0 || index % movesPerRow === 0) {
+				return `\nfrom: ${el.from} to: ${el.to}`;
+			}
+			return ` from: ${el.from} to: ${el.to}`;
+		});
+		const message = 'Illegal move, try again\nAvailable moves:' + movesStr;
+		return message;
+	},
 	wrongPlayerMessage: () => 'Wrong player',
 };
