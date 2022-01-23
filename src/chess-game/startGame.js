@@ -12,7 +12,7 @@ exports.startGame = async (user) => {
 		await createGameFile();
 	}
 
-	const players = [...await getRegisteredPlayers()];
+	const players = getRegisteredPlayers();
 	if (players.length < 2) {
 		await registerPlayer(user);
 		if (players.length === 1) {
