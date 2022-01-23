@@ -1,4 +1,4 @@
-const { access, readFile, writeFile } = require('fs/promises');
+const { access, writeFile } = require('fs/promises');
 const { constants } = require('fs');
 const gameObjectPrototype = require('./helpers/gameObjectPrototype');
 
@@ -28,12 +28,9 @@ module.exports = {
 		const data = JSON.stringify(gameObjectPrototype);
 		await createWriteFile(data);
 	},
-	readGameFile: async () => {
-		return readFile(PATH)
-			.then((result) => {
-				return JSON.parse(result);
-			})
-			.catch((err) => console.log(err));
+	readGameFile: () => {
+		const gameObj = require('../game.json');
+		return gameObj;
 	},
 	saveGameFile: async (gameObj) => {
 		const data = JSON.stringify(gameObj);
