@@ -16,13 +16,6 @@ module.exports = {
 		await saveGameFile(gameObj);
 		console.log(`Player ${playersArr.length} registered: ${user}`);
 	},
-	increaseRound: (gameObj, userIndex) => {
-		const gameObject = { ...gameObj };
-		gameObject.round.userIndex = userIndex;
-		gameObject.round.roundNumber = gameObj.round.roundNumber + 1;
-		console.log(`Round increased to ${gameObj.round.roundNumber}`);
-		return gameObject.round;
-	},
 	getRound: () => {
 		const gameObj = readGameFile();
 		return gameObj.round;
