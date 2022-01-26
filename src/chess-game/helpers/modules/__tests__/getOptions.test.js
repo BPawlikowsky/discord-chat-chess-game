@@ -1,5 +1,5 @@
-import { describe, test, expect } from '@jest/globals';
-import { getOptions } from '../getOptions';
+const { describe, test, expect } = require('@jest/globals');
+const { getOptions } = require('../getOptions');
 
 describe('getOptions', () => {
 	test('valid "start" string returns one option', () => {

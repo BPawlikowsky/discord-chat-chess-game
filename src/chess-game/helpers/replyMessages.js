@@ -17,4 +17,5 @@ module.exports = {
 		return message;
 	},
 	wrongPlayerMessage: () => 'Wrong player',
+	titleMessage: (player, turn) => `Current player: ${player} color: ${turn === 'b' ? 'Black' : 'White'}`,
 };
