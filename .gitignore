@@ -4,3 +4,8 @@ config.json
 .vscode/settings.json
 src/game.json
 src/board.png
+coverage/**
+coverage
+.vscode
+.gitignore
+jest.config.js
