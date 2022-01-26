@@ -1,13 +1,15 @@
 const { Chess } = require('chess.js');
-const { readGameFile, saveGameFile } = require('../../gameFileHandler');
 const { checkIfMoveLegal } = require('../../helpers');
-const { wrongPlayerMessage, typoFromMoveMessage, typoToMoveMessage } = require('../../helpers/replyMessages');
+const {
+	wrongPlayerMessage,
+	typoFromMoveMessage,
+	typoToMoveMessage,
+} = require('../../helpers/replyMessages');
 const { boardAction } = require('./boardAction');
 const { move } = require('./move');
 
-exports.moveAction = async (user, moveFrom, moveTo) => {
+exports.moveAction = (user, moveFrom, moveTo, gameObj) => {
 	let moveMessage;
-	const gameObj = readGameFile();
 	const chess = new Chess(gameObj.currentGameState);
 
 	const currentUser = gameObj.round.userIndex;
@@ -22,13 +24,6 @@ exports.moveAction = async (user, moveFrom, moveTo) => {
 	} else {
 		moveMessage = move(gameObj, chess, user, moveFrom, moveTo);
 	}
-	
-	await saveGameFile(gameObj);
 
-	const embeddedMessage = await boardAction(
-		moveFrom,
-		moveTo,
-		moveMessage
-	);
-	return embeddedMessage;
+	return moveMessage;
 };
