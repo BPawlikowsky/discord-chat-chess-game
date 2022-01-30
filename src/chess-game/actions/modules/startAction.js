@@ -9,23 +9,21 @@ const {
 	startGameMessage,
 } = require('../../helpers/replyMessages');
 
-exports.startAction = async (user) => {
-	const isGameFileCreated = await isGameFile();
+exports.startAction = async (user, gamePath) => {
+	const isGameFileCreated = await isGameFile(gamePath);
 	if (!isGameFileCreated) {
-		await createGameFile();
+		await createGameFile(gamePath);
 	}
 
-	const players = getRegisteredPlayers();
+	const players = getRegisteredPlayers(gamePath);
 	if (players.length < 2) {
-		await registerPlayer(user);
+		await registerPlayer(user, gamePath);
 		if (players.length === 1) {
-			return `${playerRegMessage(
-				user,
-				players.length + 1
-			)}\n${startGameMessage()}`;
+			return `${playerRegMessage(user, players.length + 1)}\n${startGameMessage()}`;
 		}
 		return playerRegMessage(user, players.length + 1);
-	} else if (players.length === 2) {
+	}
+	else if (players.length === 2) {
 		return allPlayersRegMessage();
 	}
 };

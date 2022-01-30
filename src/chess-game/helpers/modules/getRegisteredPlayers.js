@@ -1,7 +1,7 @@
-const { readGameFile } = require("../../gameFileHandler");
+const { readGameFile } = require('../../gameFileHandler');
 
-exports.getRegisteredPlayers = () => {
-    const gameObj = readGameFile();
-    if (gameObj) return gameObj.players;
-    return [];
+exports.getRegisteredPlayers = (path) => {
+	const gameObj = readGameFile(path);
+	if (gameObj) return gameObj.players;
+	return [];
 };
