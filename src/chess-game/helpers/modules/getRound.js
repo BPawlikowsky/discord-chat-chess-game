@@ -1,6 +1,6 @@
-const { readGameFile } = require("../../gameFileHandler");
+const { readGameFile } = require('../../gameFileHandler');
 
-exports.getRound = () => {
-    const gameObj = readGameFile();
-    return gameObj.round;
+exports.getRound = (path) => {
+	const gameObj = readGameFile(path);
+	return gameObj.round;
 };

@@ -5,7 +5,6 @@ const {
 	typoFromMoveMessage,
 	typoToMoveMessage,
 } = require('../../helpers/replyMessages');
-const { boardAction } = require('./boardAction');
 const { move } = require('./move');
 
 exports.moveAction = (user, moveFrom, moveTo, gameObj) => {
@@ -19,9 +18,11 @@ exports.moveAction = (user, moveFrom, moveTo, gameObj) => {
 
 	if (!checkIfMoveLegal(moveFrom)) {
 		return typoFromMoveMessage();
-	} else if (!checkIfMoveLegal(moveTo)) {
+	}
+	else if (!checkIfMoveLegal(moveTo)) {
 		return typoToMoveMessage();
-	} else {
+	}
+	else {
 		moveMessage = move(gameObj, chess, user, moveFrom, moveTo);
 	}
 

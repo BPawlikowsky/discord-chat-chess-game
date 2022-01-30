@@ -1,10 +1,10 @@
-const { readGameFile, saveGameFile } = require("../../gameFileHandler");
+const { readGameFile, saveGameFile } = require('../../gameFileHandler');
 
-exports.registerPlayer = async (user) => {
-    const gameObj = readGameFile();
-    const playersArr = [...gameObj.players];
-    playersArr.push(user);
-    gameObj.players = playersArr;
-    await saveGameFile(gameObj);
-    console.log(`Player ${playersArr.length} registered: ${user}`);
+exports.registerPlayer = (user, path) => {
+	const gameObj = readGameFile(path);
+	const playersArr = [...gameObj.players];
+	playersArr.push(user);
+	gameObj.players = playersArr;
+	saveGameFile(gameObj, path);
+	console.log(`Player ${playersArr.length} registered: ${user}`);
 };

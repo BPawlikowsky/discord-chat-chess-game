@@ -1,0 +1,12 @@
+[
+	{
+		"players": ["cptBartsky", "koopsky"],
+		"isGameOver": true,
+		"filePath": "games/game1.json"
+	},
+	{
+		"players": ["cptBartsky", "cptBartsky"],
+		"isGameOver": false,
+		"filePath": "games/game2.json"
+	}
+]
