@@ -1,6 +1,6 @@
 const { createWriteFile } = require('./createWriteFile');
 
-exports.saveGameFile = (gameObj, path) => {
+exports.saveGameFile = async (gameObj, path) => {
 	const data = JSON.stringify(gameObj);
-	createWriteFile(data, path);
+	await createWriteFile(data, path);
 };

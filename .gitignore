@@ -10,3 +10,4 @@ jest.config.js
 games
 games/**
 board.png
+gamesList.json

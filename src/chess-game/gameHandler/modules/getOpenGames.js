@@ -1,9 +1,4 @@
 exports.getOpenGames = (games) => {
-	const openGames = [];
-	games.forEach((game) => {
-		if (game.players.length === 1) {
-			openGames.push(game);
-		}
-	});
+	const openGames = games.find(game => game.players.length === 1);
 	return openGames;
 };

@@ -4,8 +4,8 @@ const { getOptions } = require('./helpers/index');
 const path = require('path');
 const { saveGameFile } = require('./gameFileHandler/modules/saveGameFile');
 
-const GAMES_LIST_PATH = path.posix.normalize(path.posix.join(__dirname, '..', '..', 'gamesList.json'));
-const GAMES_PATH = path.posix.normalize(`${path.posix.join(__dirname, '..', '..', 'games')}`);
+const GAMES_LIST_PATH = path.normalize(path.posix.join(__dirname, '..', '..', 'gamesList.json'));
+const GAMES_PATH = path.normalize(`${path.posix.join(__dirname, '..', '..', 'games')}`);
 
 exports.gameHandler = async (interaction) => {
 	const { options, user } = interaction;
@@ -38,7 +38,7 @@ exports.gameHandler = async (interaction) => {
 				openGames[0].players.push(user.username);
 			}
 			else {
-				gamePath = path.posix.join(GAMES_PATH, 'game' + (games.length + 1) + '.json');
+				gamePath = path.join(GAMES_PATH, 'game' + (games.length + 1) + '.json');
 				const newGame = {
 					players: [user.username],
 					isGameOver: false,
@@ -46,7 +46,7 @@ exports.gameHandler = async (interaction) => {
 				};
 				games.push(newGame);
 			}
-			saveGameFile(games, GAMES_LIST_PATH);
+			await saveGameFile(games, GAMES_LIST_PATH);
 		}
 	}
 	else {

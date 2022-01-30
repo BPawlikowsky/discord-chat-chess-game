@@ -22,15 +22,15 @@ exports.actionsHandler = async (optionsAsArray, user, gamePath) => {
 			moveTo,
 			gameObj,
 		);
-		saveGameFile(gameObj, gamePath);
-		const embeddedMessage = boardAction(moveMessage, gameObj);
+		await saveGameFile(gameObj, gamePath);
+		const embeddedMessage = await boardAction(moveMessage, gameObj);
 		return embeddedMessage;
 	}
 	case 'board':
 	{
 		const gameObj = readGameFile(gamePath);
 		const boardMessage = 'Current board view';
-		const message = boardAction(boardMessage, gameObj);
+		const message = await boardAction(boardMessage, gameObj);
 		return message;
 	}
 	default:

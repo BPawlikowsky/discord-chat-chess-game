@@ -17,12 +17,9 @@ exports.startAction = async (user, gamePath) => {
 
 	const players = getRegisteredPlayers(gamePath);
 	if (players.length < 2) {
-		registerPlayer(user, gamePath);
+		await registerPlayer(user, gamePath);
 		if (players.length === 1) {
-			return `${playerRegMessage(
-				user,
-				players.length + 1,
-			)}\n${startGameMessage()}`;
+			return `${playerRegMessage(user, players.length + 1)}\n${startGameMessage()}`;
 		}
 		return playerRegMessage(user, players.length + 1);
 	}
