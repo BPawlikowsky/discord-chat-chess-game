@@ -1,4 +1,5 @@
 module.exports = {
+	id: new Date().getTime().toString(),
 	players: [],
 	round: {
 		userIndex: 0,

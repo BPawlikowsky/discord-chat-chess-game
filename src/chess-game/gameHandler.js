@@ -40,6 +40,7 @@ exports.gameHandler = async (interaction) => {
 			else {
 				gamePath = path.join(GAMES_PATH, 'game' + (games.length + 1) + '.json');
 				const newGame = {
+					id: new Date().getTime().toString(),
 					players: [user.username],
 					isGameOver: false,
 					filePath: gamePath,

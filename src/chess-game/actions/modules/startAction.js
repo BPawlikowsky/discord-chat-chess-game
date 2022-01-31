@@ -1,4 +1,5 @@
 const { isGameFile, createGameFile } = require('../../gameFileHandler');
+const { setGameID } = require('../../gameHandler');
 const {
 	getRegisteredPlayers,
 	registerPlayer,
@@ -13,6 +14,7 @@ exports.startAction = async (user, gamePath) => {
 	const isGameFileCreated = await isGameFile(gamePath);
 	if (!isGameFileCreated) {
 		await createGameFile(gamePath);
+		setGameID(gamePath);
 	}
 
 	const players = getRegisteredPlayers(gamePath);
