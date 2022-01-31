@@ -4,5 +4,5 @@ This is a simple Discord Bot application for playing chess in chat, it's a corre
 
 ## Work in Progress:
 - one active game per user on server, 
-- detects checkmate and flags game as over, 
+- detects checkmate and flags game as over only( no stalemate detection), 
 - renders a png board view.
