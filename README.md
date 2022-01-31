@@ -1,5 +1,8 @@
 # discord-chat-chess-game
-Work in Progress:
+## Description
+This is a simple Discord Bot application for playing chess in chat, it's a correspondence like chess experience where every player sends a command with [from] and [to] cooridinates and recieves an updated board.
+
+## Work in Progress:
 - one active game per user on server, 
 - detects checkmate and flags game as over, 
 - renders a png board view.
