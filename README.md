@@ -1,2 +1,5 @@
 # discord-chat-chess-game
-Work in Progress, currently only one game is working per server, buggy.
+Work in Progress:
+- one active game per user on server, 
+- detects checkmate and flags game as over, 
+- renders a png board view.
