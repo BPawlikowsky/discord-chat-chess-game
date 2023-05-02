@@ -8,7 +8,7 @@ module.exports = {
 		.addStringOption(opt => opt
 			.setName('input')
 			.setRequired(true)
-			.setDescription('chess game,"start" to start\n"move [from] [to]" to move piece'),
+			.setDescription('chess game,"start" to start, "move [from] [to]" to move piece, "board" to view the current board'),
 		),
 	async execute(interaction) {
 		await gameHandler(interaction);

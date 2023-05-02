@@ -1,5 +1,5 @@
 const { isGameFile, createGameFile } = require('../../gameFileHandler');
-const { setGameID } = require('../../gameHandler');
+const { setGameID } = require('../../gameHandler/index.js');
 const {
 	getRegisteredPlayers,
 	registerPlayer,
@@ -12,11 +12,13 @@ const {
 
 exports.startAction = async (user, gamePath) => {
 	const isGameFileCreated = await isGameFile(gamePath);
+	console.log(isGameFileCreated);
 	if (!isGameFileCreated) {
-		await createGameFile(gamePath);
+		await createGameFile(gamePath).catch(e => console.log(e));
 		setGameID(gamePath);
 	}
 
+	console.log(`startAction: path: ${gamePath}`);
 	const players = getRegisteredPlayers(gamePath);
 	if (players.length < 2) {
 		await registerPlayer(user, gamePath);

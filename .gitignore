@@ -11,3 +11,4 @@ games
 games/**
 board.png
 gamesList.json
+.DS_Store

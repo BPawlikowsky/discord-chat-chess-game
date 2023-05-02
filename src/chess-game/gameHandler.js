@@ -3,12 +3,18 @@ const { getGames, isUserInActiveGame, getOpenGames } = require('./gameHandler/in
 const { getOptions } = require('./helpers/index');
 const path = require('path');
 const { saveGameFile } = require('./gameFileHandler/modules/saveGameFile');
+const { isGameFile, createGameFile } = require('./gameFileHandler');
 
 const GAMES_LIST_PATH = path.normalize(path.posix.join(__dirname, '..', '..', 'gamesList.json'));
 const GAMES_PATH = path.normalize(`${path.posix.join(__dirname, '..', '..', 'games')}`);
 
 exports.gameHandler = async (interaction) => {
 	const { options, user } = interaction;
+	const isGameFileCreated = await isGameFile(GAMES_LIST_PATH);
+	if(!isGameFileCreated) {
+		console.log("No Game file");
+		createGameFile(GAMES_LIST_PATH);
+	}
 	const games = getGames(GAMES_LIST_PATH);
 
 	let optionsAsString;
@@ -33,7 +39,8 @@ exports.gameHandler = async (interaction) => {
 		}
 		else {
 			const openGames = getOpenGames(games);
-			if (openGames.length > 0) {
+			console.log(`gameHandler: openGames: ${openGames}`);
+			if (openGames?.length > 0) {
 				gamePath = openGames[0].filePath;
 				openGames[0].players.push(user.username);
 			}
@@ -69,6 +76,7 @@ exports.gameHandler = async (interaction) => {
 			message = 'No active game available.';
 		}
 	}
+	console.log(`gameHandler: path: ${gamePath}`)
 
 	if (!message) message = await actionsHandler(optionsAsArray, user, gamePath);
 

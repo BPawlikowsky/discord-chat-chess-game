@@ -6,6 +6,6 @@ exports.createWriteFile = async (data, path) => {
 		console.log('created/written file.');
 	}
 	catch (err) {
-		return console.log(err);
+		return console.log(`createWriteFile: ${err}`);
 	}
 };

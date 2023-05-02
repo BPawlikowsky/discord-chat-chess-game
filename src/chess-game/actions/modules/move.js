@@ -1,5 +1,5 @@
-const { setGameOver } = require('../../gameHandler');
 const { constants } = require('../../helpers');
+const { setGameOver } = require('../../gameHandler/index.js');
 const {
 	legalMoveMessage,
 	illegalMoveMessage,

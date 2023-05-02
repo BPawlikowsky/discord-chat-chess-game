@@ -4,5 +4,6 @@ const { absoluteToRelativePath } = require('../../helpers/modules/absoluteToRela
 exports.readGameFile = (pathToFile) => {
 	const finalPath = absoluteToRelativePath(pathToFile, __dirname);
 	const gameObj = require(finalPath);
+	console.log('readGameFile:', gameObj);
 	return gameObj;
 };
