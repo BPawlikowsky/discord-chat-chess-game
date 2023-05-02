@@ -1,14 +1,11 @@
-const { isGameFile } = require('./modules/isGameFile');
-const { createGameFile } = require('./modules/createGameFile');
-const { readGameFile } = require('./modules/readGameFile');
-const { saveGameFile } = require('./modules/saveGameFile');
+import isGameFile from './isGameFile';
+import createGameFile from './createGameFile';
+import readGameFile from './readGameFile';
+import saveGameFile from './saveGameFile';
 
-const PATH = 'src/game.json';
-
-
-module.exports = {
-	isGameFile: isGameFile,
-	createGameFile: createGameFile,
-	readGameFile: readGameFile,
-	saveGameFile: saveGameFile,
+export default {
+  isGameFile,
+  createGameFile,
+  readGameFile,
+  saveGameFile,
 };

@@ -1,9 +1,11 @@
-const path = require('path');
+import { parse, relative, format } from 'path';
 
-exports.absoluteToRelativePath = (pathToFile, dir) => {
-	const pathObject = path.parse(pathToFile);
-	pathObject.dir = path.relative(dir, pathObject.dir);
-	const finalPath = path.format(pathObject);
-	console.log('PATH: ' + finalPath);
-	return finalPath;
+const absoluteToRelativePath = (pathToFile, dir) => {
+  const pathObject = parse(pathToFile);
+  pathObject.dir = relative(dir, pathObject.dir);
+  const finalPath = format(pathObject);
+  console.log(`PATH: ${finalPath}`);
+  return finalPath;
 };
+
+export default absoluteToRelativePath;
