@@ -1,11 +1,5 @@
-import absoluteToRelativePath from '../helpers/modules/absoluteToRelativePath';
+import { readFile } from 'fs/promises';
 
-const getGames = async (path) => {
-  const finalPath = absoluteToRelativePath(path, __dirname);
-  console.log(`GetGames: \tinput path: ${path},\n\tfinalPath: ${finalPath}`);
-  const games = await import(finalPath);
-  console.log(games);
-  return games;
-};
+const getGames = async (pathToFile) => JSON.parse(await readFile(new URL(pathToFile, import.meta.url), 'utf8'));
 
 export default getGames;

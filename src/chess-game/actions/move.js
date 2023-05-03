@@ -6,12 +6,12 @@ const { legalMoveMessage, illegalMoveMessage } = replyMessages;
 
 const { B, W } = constants;
 
-const move = (gameObj, chess, user, moveFrom, moveTo) => {
+const move = async (gameObj, chess, user, moveFrom, moveTo) => {
   const chessMove = chess.move({ from: moveFrom, to: moveTo });
   if (chessMove === null) {
     const moves = chess.moves({ verbose: true, square: moveFrom });
     if (chess.game_over()) {
-      gameObj = setGameOver(gameObj);
+      gameObj = await setGameOver(gameObj);
     }
     return illegalMoveMessage(moves);
   }

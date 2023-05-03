@@ -1,6 +1,5 @@
 import path, { normalize, posix, join } from 'path';
 import { fileURLToPath } from 'url';
-import getGames from './gameHandlers/index';
 import { getOptions } from './helpers/index';
 import isUserInActiveGame from './gameHandlers/isUserInActiveGame';
 import getOpenGames from './gameHandlers/getOpenGames';
@@ -8,6 +7,7 @@ import actionsHandler from './actionsHandler';
 import isGameFile from './gameFileHandler/isGameFile';
 import createGameFile from './gameFileHandler/createGameFile';
 import saveGameFile from './gameFileHandler/saveGameFile';
+import getGames from './gameHandlers/getGames';
 
 const filename = fileURLToPath(import.meta.url);
 
@@ -22,7 +22,7 @@ const gameHandler = async (interaction) => {
     console.log('No Game file');
     createGameFile(GAMES_LIST_PATH);
   }
-  const games = getGames(GAMES_LIST_PATH);
+  const games = await getGames(GAMES_LIST_PATH);
 
   let optionsAsString;
   try {
@@ -62,6 +62,7 @@ const gameHandler = async (interaction) => {
     }
   } else {
     let userGame;
+    console.dir(games);
     games.forEach((game) => {
       if (!game.isGameOver && game.players.length === 2) {
         if (game.players.includes(user.username)) {

@@ -4,7 +4,7 @@ import move from './move';
 
 const { wrongPlayerMessage, typoFromMoveMessage, typoToMoveMessage } = replyMessages;
 
-const moveAction = (user, moveFrom, moveTo, gameObj) => {
+const moveAction = async (user, moveFrom, moveTo, gameObj) => {
   const chess = new Chess(gameObj.currentGameState);
 
   const currentUser = gameObj.round.userIndex;
@@ -19,7 +19,7 @@ const moveAction = (user, moveFrom, moveTo, gameObj) => {
     return typoToMoveMessage();
   }
 
-  const moveMessage = move(gameObj, chess, user, moveFrom, moveTo);
+  const moveMessage = await move(gameObj, chess, user, moveFrom, moveTo);
 
   return moveMessage;
 };

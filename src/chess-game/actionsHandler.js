@@ -16,7 +16,7 @@ const actionsHandler = async (optionsAsArray, user, gamePath) => {
     case 'move':
     {
       const gameObj = await readGameFile(gamePath);
-      const moveMessage = moveAction(
+      const moveMessage = await moveAction(
         user.username,
         moveFrom,
         moveTo,

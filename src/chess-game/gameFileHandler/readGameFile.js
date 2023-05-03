@@ -1,8 +1,7 @@
-import { absoluteToRelativePath } from '../helpers/index';
+import { readFile } from 'fs/promises';
 
 const readGameFile = async (pathToFile) => {
-  const finalPath = absoluteToRelativePath(pathToFile, __dirname);
-  const gameObj = await import(finalPath);
+  const gameObj = JSON.parse(await readFile(new URL(pathToFile, import.meta.url), 'utf8'));
   console.log('readGameFile:', gameObj);
   return gameObj;
 };
