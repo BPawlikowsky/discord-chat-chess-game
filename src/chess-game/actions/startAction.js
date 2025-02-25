@@ -1,32 +1,40 @@
-import createGameFile from '../gameFileHandler/createGameFile';
-import isGameFile from '../gameFileHandler/isGameFile';
-import setGameID from '../gameHandler';
-import { getRegisteredPlayers, registerPlayer, replyMessages } from '../helpers';
+import gameManagerApi from "../gameHandlers/gameManagerApi.js";
+import { gameConstants } from "../helpers/gameConstants.js";
+import replyMessages from "../helpers/replyMessages.js";
 
-const { playerRegMessage, allPlayersRegMessage, startGameMessage } = replyMessages;
+const { OPEN } = gameConstants;
 
-const startAction = async (user, gamePath) => {
-  const isGameFileCreated = await isGameFile(gamePath);
-  console.log(isGameFileCreated);
-  if (!isGameFileCreated) {
-    await createGameFile(gamePath).catch((e) => console.log(e));
-    await setGameID(gamePath);
+const { startGameMessage, playerAlreadyInGame, playerRegMessage } =
+  replyMessages;
+
+/**
+ * @param {string} username
+ * @returns
+ */
+const startAction = async (username) => {
+  const { newGame, getGames, addPlayerToGame, getOpenGames } = gameManagerApi;
+  const gamesContainingUser = getGames().filter(
+    (game) =>
+      game.getGame().getPlayers().includes(username) &&
+      game.getStatus() === OPEN,
+  );
+
+  const playerIsNotInOpenGame = gamesContainingUser.length === 0;
+
+  const openGames = getOpenGames();
+  const areOpenGamesAvailable = openGames.length > 0;
+
+  if (playerIsNotInOpenGame && areOpenGamesAvailable) {
+    addPlayerToGame(username);
+    return playerRegMessage(username, 2);
   }
 
-  console.log(`startAction: path: ${gamePath}`);
-  const players = getRegisteredPlayers(gamePath);
-  if (players.length < 2) {
-    await registerPlayer(user, gamePath);
-    if (players.length === 1) {
-      return `${playerRegMessage(user, players.length + 1)}\n${startGameMessage()}`;
-    }
-    return playerRegMessage(user, players.length + 1);
-  }
-  if (players.length === 2) {
-    return allPlayersRegMessage();
+  if (playerIsNotInOpenGame) {
+    newGame(username);
+    return startGameMessage;
   }
 
-  return null;
+  return playerAlreadyInGame;
 };
 
 export default startAction;

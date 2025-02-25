@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"checkJs": true,
+		"esModuleInterop": true,
+		"allowJs": true,
+		"types": [
+			"jest"
+		],
+		"isolatedModules": false,
+		"target": "ESNext",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext"
+	},
+	"exclude": [
+		"node_modules",
+		"*/node_modules/**"
+	]
+}

@@ -6,3 +6,11 @@ This is a simple Discord Bot application for playing chess in chat, it's a corre
 - one active game per user on server, 
 - detects checkmate and flags game as over only( no stalemate detection), 
 - renders a png board view.
+
+## Diagrams
+```mermaid
+graph TD;
+ping;
+start;
+move;
+```

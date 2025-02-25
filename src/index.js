@@ -1,44 +1,57 @@
 // Require the necessary discord.js classes
-import { readdirSync } from 'fs';
-import { Client, Collection, Intents } from 'discord.js';
-import config from '../config.json';
-// eslint-disable-next-line camelcase
+import { Events, Client, GatewayIntentBits } from "discord.js";
+import { config } from "./config/config.js";
+import { initCommands } from "./init-commands.js";
+import gameEventHandler from "./chess-game/gameHandlers/gameEventHandler.js";
+import Logger from "./chess-game/helpers/logger.js";
+
 const { token } = config;
 
+const logger = Logger.getInstance();
+
 // Create a new client instance
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.once('ready', () => {
-  console.log('Ready!');
+let commands;
+
+client.once(Events.ClientReady, (readyClient) => {
+  commands = initCommands();
+
+  logger.info(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
-client.commands = new Collection();
-const commandFiles = readdirSync('src/commands').filter((file) => file.endsWith('.js'));
+client.on(Events.InteractionCreate, async (interaction) => {
+  if (interaction.isButton() || interaction.isStringSelectMenu()) {
+    try {
+      await gameEventHandler(interaction);
+    } catch (e) {
+      Logger.getInstance().info(e);
+    }
+  }
+  if (!interaction.isChatInputCommand()) return;
 
-const commands = [];
+  const command = commands.get(interaction.commandName);
 
-commandFiles.forEach((file) => {
-  commands.push(import(`./commands/${file}`));
-  // Set a new item in the Collection
-  // With the key as the command name and the value as the exported module
-});
-
-Promise.all(commands).then((result) => {
-  result.forEach((command) => client.commands.set(command.data.name, command));
-});
-
-client.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
+  if (!command) {
+    console.error(`No command matching ${interaction.commandName} was found.`);
+    return;
+  }
 
   try {
     await command.execute(interaction);
   } catch (error) {
     console.error(error);
-    await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    if (interaction.replied || interaction.deferred) {
+      await interaction.followUp({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    } else {
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
+    }
   }
 });
 

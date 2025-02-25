@@ -1,27 +1,32 @@
-import fs from 'fs';
-import { REST } from '@discordjs/rest';
-import { Routes } from 'discord-api-types/v9';
-import config from '../config.json';
-// eslint-disable-next-line camelcase
-const { client_id, guild_id, token } = config;
+/**
+ * @typedef {import("discord.js").SlashCommandBuilder} Builder
+ *
+ * @typedef {import("discord.js").SlashCommandOptionsOnlyBuilder} BuilderWithOptions
+ *
+ *
+ * @typedef {Builder | BuilderWithOptions} commandData
+ */
+import { Collection } from "discord.js";
+import { commands } from "./commands/index.js";
 
-const commands = [];
-const commandFiles = fs.readdirSync('src/commands').filter((file) => file.endsWith('.js'));
+export const initCommands = () => {
+  /**
+   * @type {Collection<
+   *   string,
+   *   {
+   *     name: string;
+   *     data: commandData;
+   *     execute: (
+   *       interaction: import("discord.js").ChatInputCommandInteraction,
+   *     ) => void;
+   *   }
+   * >}
+   */
+  const commandsCollection = new Collection();
 
-const loadedCommands = [];
-
-commandFiles.forEach((file) => {
-  loadedCommands.push(import(`./commands/${file}`));
-});
-
-Promise.all(commands).then((result) => {
-  result.forEach((command) => {
-    commands.push(command.data.toJSON());
+  commands.forEach((command) => {
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    commandsCollection.set(command.data.name, command);
   });
-});
-
-const rest = new REST({ version: '9' }).setToken(token);
-
-rest.put(Routes.applicationGuildCommands(client_id, guild_id), { body: commands })
-  .then(() => console.log('Successfully registered application commands.'))
-  .catch(console.error);
+  return commandsCollection;
+};

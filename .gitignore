@@ -1,5 +1,4 @@
 node_modules
-config.json
 .eslintrc.json
 .vscode/settings.json
 coverage/**
@@ -12,3 +11,4 @@ games/**
 board.png
 gamesList.json
 .DS_Store
+.env.local
